@@ -36,7 +36,7 @@ def pf( _num, _pf=[] ):
         _pf.append(_num)
         return _pf
 
-    for p in primes:
+    for p in primes: # would be much faster if this didn't loop over ALL primes, only primes 2.._num/2
         if _num % p == 0:
             _pf.append(p)
             return pf( _num / p, _pf )
@@ -52,7 +52,7 @@ def divs( _pf=[] ):
         d *= 1 + _pf.count(p)
     return d
 
-# unused.  this approach was interesting but not optimal
+# unused.  this approach was interesting but not optimal (maybe would't work at all)
 def c( n, r ):
     "returns the number of r-combinations of n elements"
     return f(n) / ( f(r) * f(n-r) )
@@ -68,6 +68,7 @@ while True:
     max = max if max >= num_divs else num_divs
 
     print( i, t, max, p, num_divs )
+
     if num_divs > 500:
         break
     
