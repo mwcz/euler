@@ -19,25 +19,19 @@
 # 
 # NOTE: Once the chain starts the terms are allowed to go above one million.
 
-# Answer is 837799, with 525 steps
-
 counts = {}
 
 def s( n, c=1 ):
     "n is the number, c is the chain length (count)"
     if n == 1: return c
-    if counts.has_key(n): return counts[n]
+    if counts.has_key(n): return counts[n] + c
     return s( n/2 if n%2==0 else 3*n+1, c+1 )
 
 max = [-1,-1]
 
 for i in xrange(1,1000000,2):
-    m = 0
-    if counts.has_key( i ):
-        m = counts[i]
-    else:
-        m = s(i)
-        counts[i] = m
+    m = s(i)
+    counts[i] = m
     if m > max[1]:
         max[0] = i
         max[1] = m
