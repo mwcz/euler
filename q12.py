@@ -25,6 +25,11 @@
 # 
 # What is the value of the first triangle number to have over five hundred divisors?
 
+# real    0m9.018s
+# user    0m8.577s
+# sys     0m0.028s
+
+
 from operator import add
 from math import factorial as f
 from primes1m import primes
@@ -65,9 +70,10 @@ while True:
 
     p = pf( t, [] )
     num_divs = divs( p )
-    max = max if max >= num_divs else num_divs
 
-    print( i, t, max, p, num_divs )
+    if num_divs > max:
+        max = num_divs
+        print( i, t, max, p, num_divs )
 
     if num_divs > 500:
         break
