@@ -18,6 +18,8 @@ from operator import add, mul
 from math import factorial as f
 from primes1m import primes
 from itertools import combinations as c
+from gmpy import is_prime
+
 
 
 
@@ -28,29 +30,44 @@ def pf( _num, _pf=[] ):
         _pf.append(_num)
         return _pf
 
-    for p in primes: # would be much faster if this didn't loop over ALL primes, only primes 2.._num/2
+    for p in primes:
+        # stop at _num/2.  would be even better to stop at sqrt(_num) once one pf over sqrt(_num) has been found
+        if p > _num/2: break 
         if _num % p == 0:
             _pf.append(p)
             return pf( _num / p, _pf )
 
+
+
+
 def divs( n ):
-    "given a list of prime factors, returns a list of positive divisors"
+    "given a whole number n, divs() will return a list of all positive divisors of n which are less than n."
     d = {1:0}
-    pfs = pf(n)
+    pfs = pf(n,[])
     for l in range(1,len(pfs)+1):
-        for k in c(pfs,l):
+        for k in c(pfs,l): # divisors can be found by multiplying ALL combinations of the prime factors
             d[reduce( mul, k )]=0
+    d.pop(n) # the number n itself should not be in the list
     return d.keys()
 
-def d( n ):
-    return divs( pf( n, [] ) )
 
+
+def d( n ):
+    return sum( divs( n ) )
+
+
+
+
+# build a dict for every number 2...9999, with a count for each, starting at zero
 amicables = {}
 
-for i in range(2,1000):
-    print(i)
-    divisors = divs(i)
-    divisor_sum = sum( divisors )
-    amicables[ divisor_sum ] = 0
+# loop through all numbers 2...9999, adding 1 to the count for each number
+for i in range(2,10000):
+    if is_prime( i ): continue # prime numbers cannot have amicable pairs
+    divsum = d(i)
+    if d(divsum) == i and i != divsum:
+        print( i, divsum )
+        amicables[i]=0
+        amicables[divsum]=0
 
-print(amicables)
+print( sum( amicables.keys() ) )
