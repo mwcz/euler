@@ -10,7 +10,4 @@
 # 
 #     1^1 + 2^2 + 3^3 + ... + 1000^1000.
 
-ans = sum( [ n**n for n in range(1,1001) ] ) % 10**10
-
-print( ans )
-
+print( str( sum( [ n**n for n in xrange(1,1001) ] ) )[-10:] )
