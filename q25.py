@@ -36,8 +36,7 @@ from gmpy import *
 i = 1
 
 while True:
-    f_i = len(str(fib(i)))
-    if f_i >= 1000:
+    if len(str(fib(i))) >= 1000:
         print(i)
         break
     i += 1

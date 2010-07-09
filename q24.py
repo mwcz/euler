@@ -14,9 +14,7 @@
 
 from itertools import permutations as p
 
-digits = [0,1,2,3,4,5,6,7,8,9]
-
-perms = p( digits )
+perms = p( range(10) )
 
 i = 1
 for perm in perms:
