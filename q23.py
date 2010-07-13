@@ -78,6 +78,7 @@ for a in abundants:
         abundants_sums[ s ] = 1
 
 abundants_sums = abundants_sums.keys()
+print("number of abundant numbers' sums", len(abundants_sums))
 cannot = [] # positive ints which can't be written as the sum of two abundants
 
 print( "finding integers not in list of abundant numbers' sums" )
