@@ -15,6 +15,9 @@
 
 from json import loads
 
+# Right now, this solution is ridiculously stupid and doesn't work
+# At All.
+
 coins = [ 1, 2, 5, 10, 20, 50, 100, 200 ]
 coins.reverse()
 
