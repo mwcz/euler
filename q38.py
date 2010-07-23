@@ -20,6 +20,30 @@
 # be formed as the concatenated product of an integer with 
 # (1,2, ... , n) where n > 1?
 
+def is_pandigital( _s ):
+
+    s = str(_s)
+
+    l = [ int(c) for c in s ]
+    l.sort()
+
+    return l == [1,2,3,4,5,6,7,8,9]
+
+from itertools import count
+
 if __name__ == "__main__":
 
-    pass
+    for n in count(1):
+
+        concat = ""
+
+        for m in count(1):
+
+            prod = n*m
+            if len(str(prod)) > 9 - len(concat): break
+            concat += str(prod)
+
+        if is_pandigital(concat):
+            print(concat)
+
+
