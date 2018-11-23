@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["digit","Given a number and a digit, return just the requested digit.  Indexing for the requested digit starts with 0 at the least significant digit.  For example, digit(54321, 2) will return 3."]]});

@@ -8,19 +8,9 @@
 // By considering the terms in the Fibonacci sequence whose values do not exceed four million, find
 // the sum of the even-valued terms.
 
-fn fib(n: i32) -> i64 {
-    let mut f1: i64 = 0;
-    let mut f2: i64 = 1;
-    let mut ft: i64;
-    let mut i: i32 = n - 1;
-    while i > 0 {
-        ft = f2;
-        f2 = f1 + f2;
-        f1 = ft;
-        i -= 1;
-    }
-    f2
-}
+extern crate euler;
+
+use euler::fib;
 
 fn even(n: i64) -> bool {
     n % 2 == 0

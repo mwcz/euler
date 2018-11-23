@@ -9,24 +9,9 @@
 
 extern crate euler;
 
-use euler::num::digit;
+use euler::is_palindrome;
 
 fn main() {
-    fn is_palindrome(n: u128) -> bool {
-        let mag = (n as f64).log10() as u128;
-        let halfmag = 1 + mag / 2;
-        for i in 0..halfmag {
-            let d1 = digit(n, i as u32);
-            let d2 = digit(n, (mag - i) as u32);
-
-            if d1 != d2 {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     let mut largest = 0;
 
     for n in 100..999 {

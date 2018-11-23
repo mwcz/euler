@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["fib","Get the nth Fibonacci number."],["is_palindrome","Is the given number a palindrome?"]]});
