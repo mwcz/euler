@@ -1,5 +1,16 @@
 /* A crate for prime number operations. */
 
+pub mod num {
+    /**
+     * Given a number and a digit, return just the requested digit.  Indexing for the requested
+     * digit starts with 0 at the least significant digit.  For example, digit(54321, 2) will
+     * return 3.
+     */
+    pub fn digit(n: u128, d: u32) -> u8 {
+        return ((n / (10 as u128).pow(d)) % 10) as u8;
+    }
+}
+
 pub mod prime {
     pub fn primes(count: u128) -> Vec<u128> {
         let mut ps: Vec<u128> = vec![];

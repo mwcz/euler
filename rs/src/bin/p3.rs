@@ -1,3 +1,5 @@
+// Problem 3
+//
 // The prime factors of 13195 are 5, 7, 13 and 29.
 // What is the largest prime factor of the number 600851475143 ?
 
@@ -10,8 +12,8 @@ fn main() {
 
     loop {
         let f = prime::p_rho(n);
-        println!("{:?}", f);
         if n == f {
+            println!("{:?}", f);
             break;
         }
         n = n / f;
