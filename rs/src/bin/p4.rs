@@ -15,7 +15,7 @@ fn main() {
     let mut largest = 0;
 
     for n in 100..999 {
-        for m in 100..999 {
+        for m in 100..=n {
             let nm = n * m;
             let p = is_palindrome(nm);
             if nm > largest && p {
