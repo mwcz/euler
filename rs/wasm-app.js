@@ -1,5 +1,7 @@
 const importObject = {
-    imports: { imported_func: arg => console.log(arg) }
+    imports: {
+        imported_func: arg => console.log(arg)
+    }
 };
 
 const app = new Vue({
@@ -17,17 +19,23 @@ const app = new Vue({
   }
 })
 
+fetch('./target/wasm32-unknown-unknown/debug/p2-for-wasm.wasm').then(response =>
+
+  response.arrayBuffer()
+
+).then(bytes =>
+
+  WebAssembly.instantiate(bytes, importObject)
+
+).then(results => {
+
+    const sum = results.instance.exports.fibsum();
+    app.sum = sum;
+
+});
+
 // WebAssembly.instantiateStreaming(fetch('./target/wasm32-unknown-unknown/release/p2-for-wasm.wasm'), importObject)
 //     .then(obj => {
 //         const sum = obj.instance.exports.fibsum();
 //         app.sum = sum;
 //     });
-
-fetch('./target/wasm32-unknown-unknown/release/p2-for-wasm.wasm').then(response =>
-  response.arrayBuffer()
-).then(bytes =>
-  WebAssembly.instantiate(bytes, importObject)
-).then(results => {
-    const sum = results.instance.exports.fibsum();
-    app.sum = sum;
-});
