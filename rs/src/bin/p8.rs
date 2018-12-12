@@ -32,7 +32,7 @@ extern crate euler;
 use std::vec::Vec;
 
 fn main() {
-    let digits: Vec<u32> = vec![
+    let digits = vec![
         7, 3, 1, 6, 7, 1, 7, 6, 5, 3, 1, 3, 3, 0, 6, 2, 4, 9, 1, 9, 2, 2, 5, 1, 1, 9, 6, 7, 4, 4,
         2, 6, 5, 7, 4, 7, 4, 2, 3, 5, 5, 3, 4, 9, 1, 9, 4, 9, 3, 4, 9, 6, 9, 8, 3, 5, 2, 0, 3, 1,
         2, 7, 7, 4, 5, 0, 6, 3, 2, 6, 2, 3, 9, 5, 7, 8, 3, 1, 8, 0, 1, 6, 9, 8, 4, 8, 0, 1, 8, 6,
@@ -69,20 +69,77 @@ fn main() {
         0, 7, 5, 2, 9, 6, 3, 4, 5, 0,
     ];
 
-    fn add13(digits: Vec<u32>, start: u16) -> u32 {
+    fn mul_sequence(digits: &Vec<i64>, start: i64, len: i64) -> i64 {
         // oob checks
         if (16 as usize) >= digits.len() {
             return 255;
         }
-        let mut sum: u32 = 0;
-        for i in start..start + 13 {
-            sum += digits[i as usize] as u32;
+        let mut product: i64 = 1;
+        for i in start..start + len {
+            product *= digits[i as usize] as i64;
         }
-        sum
+        product
     }
 
-    let first13 = add13(digits, 0);
+    /// Scan a slice of a sequence of digits to see if it contains the given digit.
+    fn sequence_contains(digits: &Vec<i64>, digit: i64, start: i64, len: i64) -> i64 {
+        for i in (start..start + len).rev() {
+            if digits[i as usize] == digit {
+                return i as i64;
+            }
+        }
 
-    // println!("{:?}", digits);
-    println!("{:#?}", first13);
+        -1
+    }
+
+    let mul13 = |d, s| mul_sequence(d, s, 13);
+    let find0 = |d, s| sequence_contains(d, 0, s, 13);
+
+    // the rolling product
+    let mut product = 1;
+
+    // highest product seen
+    let mut highest_product = 0;
+
+    // set this to false when a zero is encountered so we know to do a new 13-digit multiplication, rather than rolling multiplication.
+    let mut in_sequence = false;
+
+    // the actual loop index, declared outside the loop so that it can be updated
+    let mut i: i64 = 0;
+
+    loop {
+        // break loop when we reach the end of the digits
+        if i as usize >= digits.len() - 13 {
+            break;
+        }
+        // starting at i, look for zeroes in the following 13 digits
+        let i0 = find0(&digits, i);
+        if i0 == -1 {
+            // if we're already in a non-zero sequence, divide the product by digits[i-1] and
+            // multiply it by digits[i+12].
+            if in_sequence {
+                product /= digits[(i - 1) as usize];
+                product *= digits[(i + 12) as usize];
+            } else {
+                // if we've just entered a non-zero sequence, do a full 13-digit mul
+                product = mul13(&digits, i);
+            }
+
+            // if that product is higher than the highest product, update the highest product.
+            if product > highest_product {
+                highest_product = product;
+            }
+
+            // record that we're already in a non-zero sequence
+            in_sequence = true;
+        } else {
+            // if a zero is found, set i to 1 + the index of the zero and continue
+            i = i0 + 1;
+            in_sequence = false;
+        }
+
+        i += 1;
+    }
+
+    println!("{:?}", highest_product);
 }
