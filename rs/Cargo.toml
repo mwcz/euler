@@ -1,6 +1,6 @@
 [package]
 name = "euler"
 version = "0.1.0"
-authors = ["Michael Clayton <mclayton@redhat.com>"]
+authors = ["Michael Clayton <mwc@clayto.com>"]
 
 [dependencies]
